@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server Enviroment",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KB-Programmer"
+  },
+  "license": "ISC",
+  "author": "King Bonhuer",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.3",
+    "mysql2": "^3.20.0"
+  }
+}
