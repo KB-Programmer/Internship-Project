@@ -1,9 +1,16 @@
 import React from 'react';
+import {BrowserRouter as Router ,Routes,Route} from 'react-router-dom'
+import Login from './Component/Login'
 
 const App = () => {
   return (
     <div>
-      <h1 className='text-center text-3xl font-bold'>Hello World </h1>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
