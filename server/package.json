@@ -1,22 +1,26 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "Server Enviroment",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/KB-Programmer"
-  },
-  "license": "ISC",
-  "author": "King Bonhuer",
-  "type": "module",
-  "main": "index.js",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon server.js"
   },
+  "keywords": [],
+  "author": "King Bonheur",
+  "license": "ISC",
+  "type": "module",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.3.3",
-    "mysql2": "^3.20.0"
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "multer": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }

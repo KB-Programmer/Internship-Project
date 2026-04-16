@@ -68,7 +68,7 @@ const NandF = () => {
           <FaCaretRight className="fixed z-60 ml-62 mt-40 bg-white rounded-md text-green-500 w-6 h-6 shadow-md p-1 text-center text-2xl" />
         </div>
         {/* Main Part */}
-        <div className="bg-gray-200 w-full  rounded-xl p-2 flex-1">
+        <div className="bg-gray-100 w-full min-h-screen  rounded-xl p-2 flex-1">
           <div className="flex flex-col gap-2">
             {/* Header Section */}
             <div className="p-2 bg-white rounded-xl">
