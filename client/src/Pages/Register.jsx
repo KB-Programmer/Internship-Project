@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdAppRegistration } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import axios from 'axios'
 
 const Register = () => {
   const nav = useNavigate();
@@ -29,9 +30,10 @@ const Register = () => {
     ) {
       toast.error('You must fill all field')
     } else {
-      toast.success('Register SuccessFully')
-      console.log(data);
-    nav('/login')
+      axios.post('http://localhost:4001/api/register', data).then((res) => {
+        toast.success(`${res.data.Message}`)
+        nav('/login')
+      }).catch(err=>console.log(err))
     }
   }
      return (
