@@ -89,10 +89,10 @@ const Register = () => {
                    {show ? <FaEyeSlash/> : <FaEye/>}
                  </span>
                </div>
-               <button type='submit' className="rounded-md px-7 py-2 bg-[#006EC4] text-white text-base font-bold">
+               <button type='submit' className="rounded-md px-7 py-2 bg-[#006EC4] text-white text-base font-bold cursor-pointer">
                  Register Now
                </button>
-               <Link className="text-blue-700" to="/login">
+               <Link className="text-blue-700 hover:underline" to="/login">
                  Already have any account? Log in here!
                </Link>
              </form>

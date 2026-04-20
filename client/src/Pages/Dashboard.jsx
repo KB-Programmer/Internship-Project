@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaBox, FaBoxOpen, FaDollarSign } from 'react-icons/fa';
 import { MdAddAlert, MdAddBox, MdAlarm, MdCheckBox, MdCrisisAlert, MdDangerous, MdGifBox, MdSdCardAlert } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
 
 const Dashboard = () => {
   const [data, setData] = useState([
@@ -31,7 +32,7 @@ const Dashboard = () => {
            <div className="">
              <h1 className="text-2xl text-green-500 font-bold">Dashboard</h1>
            </div>
-           <div className="bg-white px-10 py-6 rounded-2xl w-full grid md:grid-cols-2 lg:grid-cols-3">
+           <div className="bg-white px-10 py-6 rounded-2xl w-full grid md:grid-cols-2 lg:grid-cols-3 gap-9">
              <div className="p-5 flex gap-4 rounded-xl items-center w-90 h-20 border border-l-green-500 border-l-4 border-r-0 border-t-0 border-b-0 shadow-md shadow-olive-400">
                <FaBoxOpen className="text-3xl text-green-500" />
                <div className="">
@@ -69,7 +70,7 @@ const Dashboard = () => {
                </div>
                <div className="">
                  <table className="w-full h-50 overflow-hidden rounded-xl shadow-md shadow-gray-400">
-                   <thead className="h-10 bg-white border-b-green-500 border border-t-0 border-r-0 border-l-0">
+                   <thead className="h-10 bg-white border-b-green-500 border border-t-0 border-r-0 border-l-0 cursor-pointer">
                      <tr className=" text-lg text-gray-400">
                        <th>Category</th>
                        <th>Product Price</th>
@@ -81,7 +82,7 @@ const Dashboard = () => {
                      {data.map((item, index) => (
                        <tr
                          key={index}
-                         className="text-lg font-mono hover:bg-white hover:border-b-green-500 hover:border hover:border-t-0 hover:border-r-0 hover:border-l-0"
+                         className="text-lg font-mono hover:bg-white hover:border-b-green-500 hover:border hover:border-t-0 hover:border-r-0 hover:border-l-0 cursor-pointer"
                        >
                          <td>{index + 1}</td>
                          <td>{item.item}</td>

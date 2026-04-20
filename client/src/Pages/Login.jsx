@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom'
+import axios from 'axios'
+
 const Login =()=>{
      const [show,setShow]=useState(false)
-     const navigate = useNavigate()
+     const nav = useNavigate()
      const [data, setData] = useState({
-          username: '',
+          email: '',
           password:''
      })
      const handleFormData = (e) => {
@@ -15,12 +17,18 @@ const Login =()=>{
      }
      const handleFormSubmit = (e) => {
           e.preventDefault();
-          if (!data.username || !data.password) {
+          if (!data.email || !data.password) {
                toast.error('You must fill all field')
                return
           }
-          toast.success(`Welcome Mr/Mrs ${data.username}`)
-          navigate('/')
+          axios.post('http://localhost:4001/api/login', data).then((res) => {
+             if(res.data.Message){
+               toast.success(`You're Welcome! Mr/Mrs ${res.data.user}`)
+               nav(`/`)
+                  return;
+             }
+             return toast.error('Invalid Credentials! Check it Well')
+          }).catch(err=>console.log(err)) 
      }
 return (
   <>
@@ -36,7 +44,7 @@ return (
                          <p className='text-gray-500'>Log in to Manage your Stock Easy and Fast!</p>
                     </div>
                     <form className=' flex flex-col gap-2 ' onSubmit={handleFormSubmit}>
-                         <input name='username' onChange={handleFormData} type="text" className='rounded-md border-2 border-blue-300 px-7 py-2 focus:border-blue-700 outline-none'  placeholder='Enter your Username'/>
+                         <input name='email' onChange={handleFormData} type="email" className='rounded-md border-2 border-blue-300 px-7 py-2 focus:border-blue-700 outline-none'  placeholder='Enter your Email'/>
                          <div className="relative flex items-center">
                               <input name='password' onChange={handleFormData}  type={show?'text':'password'} className='w-full rounded-md border-2 border-blue-300 px-7 py-2 focus:border-blue-700 outline-none' placeholder='Enter your Password' />
                               <span className='cursor-pointer absolute right-5 ' onClick={()=>setShow(!show)}>{ show? <FaEyeSlash/> : <FaEye/> }</span>
@@ -48,8 +56,8 @@ return (
                               </div>
                               <Link className='underline text-blue-700' to="/forgot-password">Forgot My Password?</Link>
                          </div>
-                         <button type='submit' className='rounded-md px-7 py-2 bg-[#006EC4] text-white text-base font-bold'>Login Now</button>
-                         <Link className='text-blue-700' to='/register'>I don't have any account? Register here!</Link>
+                         <button type='submit' className='rounded-md px-7 py-2 bg-[#006EC4] text-white text-base font-bold cursor-pointer'>Login Now</button>
+                         <Link className='text-blue-700 hover:underline' to='/register'>I don't have any account? Register here!</Link>
                     </form>
       </div>
     </div>

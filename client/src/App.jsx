@@ -36,7 +36,7 @@ const App = () => {
           <Route path="/" element={<NandF />}>
             <Route index element={<Dashboard />} />
             <Route path="/products" element={<Product />} />
-            <Route path="/stockin" element={<StockIn />} />
+            <Route path="/stockin" element={<StockIn  />} />
             <Route path="/stockout" element={<StockOut />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/setting" element={<Settings />} />
