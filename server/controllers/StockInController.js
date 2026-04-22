@@ -25,7 +25,7 @@ export const insertStock = async (req,res) => {
 
 export const selectStock = async (req, res) => {
      try {
-          const listStock = await Stockin.find();
+          const listStock = await Stockin.find().sort({createdAt: -1});
           if (!listStock) {
                res.json({ success: true, message: 'No Product Found in Stock, Add Product' })
                return;

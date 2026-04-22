@@ -24,7 +24,7 @@ const App = () => {
             background: "#1f2937", // Tailwind slate-800
             color: "#f9fafb",      // Tailwind gray-50
           },
-          duration: 4000,
+          duration: 7000,
         }}
       />
       

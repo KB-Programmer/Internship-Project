@@ -1,9 +1,18 @@
 import Product from "../models/ProductModel.js";
 
 // insert
-export const insertProduct = async (req,res) => {
+export const insertProduct = async (req, res) => {
+     console.log(req.body)
      try {
-          const { name, category, unit, buying_price, selling_price, reorder_level } = req.body;
+          const {
+            name,
+            category,
+            unit,
+            buying_price,
+            selling_price,
+            current_stock, 
+            reorder_level,
+          } = req.body;
           if ( !name || !category || !unit || !buying_price || !selling_price || !reorder_level) {
                res.json({ message: 'You Must fill all field', success: false })
                return;
@@ -14,11 +23,15 @@ export const insertProduct = async (req,res) => {
             unit,
             buying_price,
             selling_price,
+            current_stock,
             reorder_level,
           });
+          if (!product) {
+              res.json({success:false,message:'Product Not Inserted'}) 
+          }
           return res.json({success:true,message:`${product.name} Product created successfully `})
      } catch (error) {
-          res.json(error.message)
+          res.json({ message:error.message || 'Something Wrong' })
      }
 }
 
@@ -26,9 +39,9 @@ export const insertProduct = async (req,res) => {
 
 export const selectProduct = async (req, res) => {
      try {
-          const listProduct = await Product.find();
+          const listProduct = await Product.find().sort({createdAt: -1});
           if (!listProduct) {
-               res.json({ success: true, message: 'No Product Found, Insert Product' })
+               res.json({ success: false, message: 'No Product Found, Insert Product' })
                return;
           }
           return res.json({success:true,products:listProduct})
@@ -74,7 +87,7 @@ export const updateProduct = async(req,res)=>{
 export const deleteOneProduct = async(req,res)=>{
      try {
           const {id} = req.params;
-          const deleteProduct = await Product.findByIdAndDelete({_id:id})
+          const deleteProduct = await Product.findByIdAndDelete({_id: id})
           if(!deleteProduct){
                return res.json({success:false,message:'Product Not deleted'})
           }
