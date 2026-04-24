@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const StockInSchema = mongoose.Schema(
   {
-    product: { type: String, required: true },
-    category: { type: String, required: true, unique: true },
+    productId: { type: mongoose.Schema.Types.ObjectId,ref:'product' },
     qty_recieved: { type: Number, required: true },
-    supplier: { type: Number, required: true }
+    supplier: { type: String, default:'' },
+    note: { type: String, default:'' }
   },
   { timestamps: true },
 );

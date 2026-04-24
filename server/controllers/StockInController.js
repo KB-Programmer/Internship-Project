@@ -1,23 +1,27 @@
 import Stockin from '../models/StockInModel.js'
+import Product from '../models/ProductModel.js'
 
 
 // insert
 export const insertStock = async (req,res) => {
      try {
-          const { product, category, qty_recieved, supplier } = req.body;
-          if ( !product || !category || !qty_recieved || !supplier ) {
+          const { productId, qty_recieved, supplier,note } = req.body;
+          if ( !productId || !qty_recieved || !supplier || !note ) {
                res.json({ message: 'You Must fill all field', success: false })
                return;
           }
           const stockin = await Stockin.create({
-            product,
-            category,
+            productId,
             qty_recieved,
             supplier,
+            note,
           });
-          return res.json({success:true,message:`${stockin.product} Product Added successfully `})
+          await Product.findByIdAndUpdate(productId,{
+               $inc:{current_stock:qty_recieved}
+          })
+          return res.json({success:true,message:`${stockin.productId} Product Added successfully `})
      } catch (error) {
-          res.json(error.message)
+          res.json({success:false,message:error.message})
      }
 }
 
@@ -25,7 +29,7 @@ export const insertStock = async (req,res) => {
 
 export const selectStock = async (req, res) => {
      try {
-          const listStock = await Stockin.find().sort({createdAt: -1});
+          const listStock = await Stockin.find().populate('productId').sort({createdAt: -1});
           if (!listStock) {
                res.json({ success: true, message: 'No Product Found in Stock, Add Product' })
                return;
@@ -57,15 +61,15 @@ try {
 export const updateStock = async(req,res)=>{
      try {
           const { id } = req.params;
-          const { product, category, qty_recieved, supplier} = req.body;
+          const { productId, qty_recieved, supplier, note } = req.body;
           const editStock = await Stockin.findByIdAndUpdate(
             { _id: id },
-            { product, category, qty_recieved, supplier }
+            { productId, qty_recieved, supplier, note },
           );
           if (!editStock) {
                return res.json({success:false,message:'Product in Stock Not Updated'})
           }
-          return res.json({success:true,message:`${editStock.product} Product Stocked Update Successfully`})
+          return res.json({success:true,message:`${editStock.productId} Product Stocked Update Successfully`})
      } catch (error) {
           res.json(error.message)
      }
@@ -80,6 +84,9 @@ export const deleteOneStock = async(req,res)=>{
           if(!deleteStock){
                return res.json({success:false,message:'Product Stock Not deleted'})
           }
+          await Product.findByIdAndUpdate(deleteStock.productId,{
+               $inc:{current_stock: -deleteStock.qty_recieved}
+          })
           return res.json({success:true,message:`${deleteStock.product} Product Stock Delete Successfully`})
      } catch (error) {
           res.json(error.message)

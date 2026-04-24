@@ -1,8 +1,25 @@
 import Product from "../models/ProductModel.js";
 
+// get summary
+
+export const getStats = async (req, res) => {
+     try {
+          const products= await Product.find();
+          const totalProducts = await Product.countDocuments();
+          const totalStock = products.reduce((t,p)=>(t+p.current_stock),0)
+          const stockValue = products.reduce((t,p)=>(t+p.current_stock*p.buying_price));
+          const lowStock = products.filter((p) => p.current_stock <= p.reorder_level).length;
+          const expectedTotalIncome = products.reduce((t,p)=>(t+p.current_stock*p.selling_price),0);
+          const totalProfit = expectedTotalIncome - stockValue ;
+
+          return res.json({success:true,products,totalProducts,totalStock,lowStock})
+     } catch (error) {
+          res.json({success:false,message:error.message})
+     }
+}
+
 // insert
 export const insertProduct = async (req, res) => {
-     console.log(req.body)
      try {
           const {
             name,
@@ -14,7 +31,7 @@ export const insertProduct = async (req, res) => {
             reorder_level,
           } = req.body;
           if ( !name || !category || !unit || !buying_price || !selling_price || !reorder_level) {
-               res.json({ message: 'You Must fill all field', success: false })
+               res.json({success:false, message: 'You Must fill all field', success: false })
                return;
           }
           const product = await Product.create({
@@ -31,7 +48,7 @@ export const insertProduct = async (req, res) => {
           }
           return res.json({success:true,message:`${product.name} Product created successfully `})
      } catch (error) {
-          res.json({ message:error.message || 'Something Wrong' })
+          res.json({ success:false,message:error.message || 'Something Wrong' })
      }
 }
 
@@ -71,14 +88,14 @@ try {
 export const updateProduct = async(req,res)=>{
      try {
           const { id } = req.params;
-          const { name, category, unit, buying_price, selling_price, reorder_level } = req.body;
-          const editProduct = await Product.findByIdAndUpdate({ _id: id }, { name, category, unit, buying_price, selling_price, reorder_level });
+          const { name, category, unit, buying_price, selling_price,current_stock, reorder_level } = req.body;
+          const editProduct = await Product.findByIdAndUpdate({ _id: id }, { name, category, unit, buying_price, selling_price, current_stock, reorder_level });
           if (!editProduct) {
                return res.json({success:false,message:'Product Not Updated'})
           }
           return res.json({success:true,message:`${editProduct.name} Product Update Successfully`})
      } catch (error) {
-          res.json(error.message)
+          res.json({ success:false,message:error.message })
      }
 }
 

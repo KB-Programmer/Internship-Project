@@ -5,7 +5,7 @@ const StockOutSchema = mongoose.Schema(
     product: { type: String, required: true },
     category: { type: String, required: true, unique: true },
     qty_issued: { type: Number, required: true },
-    reason: { type: Number, required: true }
+    reason: { type: String, default:'' }
   },
   { timestamps: true },
 );
