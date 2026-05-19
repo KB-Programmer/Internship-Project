@@ -6,8 +6,8 @@ import Product from '../models/ProductModel.js'
 export const insertStock = async (req,res) => {
      try {
           const { productId, qty_recieved, supplier,note } = req.body;
-          if ( !productId || !qty_recieved || !supplier || !note ) {
-               res.json({ message: 'You Must fill all field', success: false })
+          if ( !productId || !qty_recieved ) {
+               res.json({ message: 'You Must fill all required field', success: false })
                return;
           }
           const stockin = await Stockin.create({
@@ -36,7 +36,7 @@ export const selectStock = async (req, res) => {
           }
           return res.json({success:true,stocks:listStock})
      } catch (error) {
-          res.json(error.message)
+          res.json({message:error.message})
      }
 }
 
@@ -87,7 +87,7 @@ export const deleteOneStock = async(req,res)=>{
           await Product.findByIdAndUpdate(deleteStock.productId,{
                $inc:{current_stock: -deleteStock.qty_recieved}
           })
-          return res.json({success:true,message:`${deleteStock.product} Product Stock Delete Successfully`})
+          return res.json({success:true,message:`${deleteStock.productId?.name} Product Stock Delete Successfully`})
      } catch (error) {
           res.json(error.message)
      }

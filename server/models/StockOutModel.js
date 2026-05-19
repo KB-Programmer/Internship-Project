@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const StockOutSchema = mongoose.Schema(
   {
-    product: { type: String, required: true },
-    category: { type: String, required: true, unique: true },
+    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'product' },
     qty_issued: { type: Number, required: true },
-    reason: { type: String, default:'' }
+    reason: { type: String, default:'' },
+    note: { type: String, default:'' },
   },
   { timestamps: true },
 );

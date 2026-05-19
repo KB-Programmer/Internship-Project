@@ -13,6 +13,6 @@ stockOutRouter.post('/addproduct',insertStockOut)
 stockOutRouter.get("/selectall", selectStockOut);
 stockOutRouter.get("/selectone", selectOneStockOut);
 stockOutRouter.put("/update", updateStockOut);
-stockOutRouter.delete("/delete", deleteOneStockOut);
+stockOutRouter.delete("/delete/:id", deleteOneStockOut);
 
 export default stockOutRouter;

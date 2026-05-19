@@ -7,12 +7,12 @@ export const getStats = async (req, res) => {
           const products= await Product.find();
           const totalProducts = await Product.countDocuments();
           const totalStock = products.reduce((t,p)=>(t+p.current_stock),0)
-          const stockValue = products.reduce((t,p)=>(t+p.current_stock*p.buying_price));
+          const stockValue = products.reduce((t,p)=>(t+p.current_stock*p.buying_price),0);
           const lowStock = products.filter((p) => p.current_stock <= p.reorder_level).length;
           const expectedTotalIncome = products.reduce((t,p)=>(t+p.current_stock*p.selling_price),0);
           const totalProfit = expectedTotalIncome - stockValue ;
 
-          return res.json({success:true,products,totalProducts,totalStock,lowStock})
+          return res.json({success:true, products,stockValue,totalProducts,totalStock,lowStock})
      } catch (error) {
           res.json({success:false,message:error.message})
      }
